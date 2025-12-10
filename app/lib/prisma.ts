@@ -2,7 +2,7 @@ import { PrismaClient } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
-const globalForPrisma = global as unknown as {
+const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
   pool: Pool | undefined;
 };
@@ -11,11 +11,12 @@ if (!globalForPrisma.pool) {
   globalForPrisma.pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     max: 1,
+    idleTimeoutMillis: 0,
+    allowExitOnIdle: true,
   });
 }
 
 const pool = globalForPrisma.pool;
-
 const adapter = new PrismaPg(pool);
 
 if (!globalForPrisma.prisma) {
@@ -29,9 +30,3 @@ if (!globalForPrisma.prisma) {
 }
 
 export const prisma = globalForPrisma.prisma;
-
-// Graceful shutdown
-export async function disconnect() {
-  await prisma.$disconnect();
-  await pool.end();
-}
