@@ -97,12 +97,13 @@ export async function DELETE(
         { status: 400 }
       );
     }
-    await prisma.feedback.delete({
+    const deletedFeedback = await prisma.feedback.delete({
       where: { id: id },
     });
     return NextResponse.json({
       success: true,
       message: "Feedback deleted successfully",
+      data: deletedFeedback,
     });
   } catch (error: any) {
     if (error.code === "P2025") {
