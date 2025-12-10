@@ -138,4 +138,4 @@ MIT License - feel free to use this project for learning or production.
 
 ---
 
-**Built with ❤️ using Next.js** | [Live Demo](#) | [Report Bug](https://github.com/anuz505/Next-JS-feedback-project/issues)
+**Built with ❤️ using Next.js** | [Live Demo](next-js-feedback-project.vercel.app) | [Report Bug](https://github.com/anuz505/Next-JS-feedback-project/issues)
