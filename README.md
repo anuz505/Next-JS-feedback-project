@@ -1,36 +1,141 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💬 Feedback App
 
-## Getting Started
+> **Your voice matters.** A modern, real-time feedback collection platform built with Next.js 15, Prisma, and PostgreSQL.
 
-First, run the development server:
+## 🎯 Internship Project
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+This application was developed as part of an internship project to demonstrate proficiency in modern full-stack development. It showcases the implementation of a complete feedback management system using industry-standard tools and best practices.
+
+## ✨ What is this?
+
+Ever wanted to capture what your users _really_ think? This is a full-stack feedback application that lets users submit, view, update, and delete feedback with **ratings and descriptions**. Perfect for product teams, event organizers, or anyone who values honest opinions.
+
+### 🎯 Key Features
+
+- **⚡ Real-time Updates** - Powered by TanStack Query for instant UI feedback
+- **🎨 Beautiful UI** - Clean, responsive design that works on any device
+- **🔄 Full CRUD Operations** - Create, read, update, and delete feedback seamlessly
+- **⭐ Star Ratings** - 1-5 star rating system for quick sentiment analysis
+- **💾 PostgreSQL Database** - Reliable data persistence with Prisma ORM
+- **🚀 Production Ready** - Built with Next.js 15 App Router and TypeScript
+- **🎭 Type-Safe** - End-to-end TypeScript for rock-solid reliability
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js 15](https://nextjs.org) (App Router)
+- **Language:** TypeScript
+- **Database:** PostgreSQL
+- **ORM:** Prisma with PostgreSQL adapter
+- **State Management:** TanStack Query (React Query)
+- **Styling:** Tailwind CSS
+- **Deployment:** Vercel
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ installed
+- PostgreSQL database (local or hosted)
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/anuz505/Next-JS-feedback-project.git
+   cd feedback
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+
+   Create a `.env` file in the root directory:
+
+   ```env
+   DATABASE_URL="postgresql://user:password@localhost:5432/feedback_db"
+   ```
+
+4. **Run database migrations**
+
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. **Generate Prisma Client**
+
+   ```bash
+   npx prisma generate
+   ```
+
+6. **Start the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+7. **Open your browser**
+
+   Navigate to [http://localhost:3000](http://localhost:3000) 🎉
+
+## 📁 Project Structure
+
+```
+feedback/
+├── app/
+│   ├── api/feedback/        # RESTful API routes
+│   ├── components/          # React components
+│   ├── hooks/               # Custom React hooks
+│   ├── lib/                 # Utilities & Prisma client
+│   └── providers/           # Context providers
+├── prisma/
+│   ├── schema.prisma        # Database schema
+│   └── migrations/          # Migration history
+└── public/                  # Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎮 How to Use
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Submit Feedback** - Fill out the form with a title, description, and rating
+2. **View All Feedback** - See all submitted feedback in a clean card layout
+3. **Edit Feedback** - Click edit to modify existing feedback
+4. **Delete Feedback** - Remove feedback that's no longer relevant
+5. **Rate Experience** - Use the 1-5 star system to express satisfaction
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🌐 API Endpoints
 
-## Learn More
+| Method | Endpoint             | Description         |
+| ------ | -------------------- | ------------------- |
+| GET    | `/api/feedback`      | Fetch all feedback  |
+| POST   | `/api/feedback`      | Create new feedback |
+| PUT    | `/api/feedback/[id]` | Update feedback     |
+| DELETE | `/api/feedback/[id]` | Delete feedback     |
 
-To learn more about Next.js, take a look at the following resources:
+## 🚢 Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Deploy to Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push your code to GitHub
+2. Import your repository on [Vercel](https://vercel.com)
+3. Add your `DATABASE_URL` environment variable
+4. Deploy! 🚀
 
-## Deploy on Vercel
+The app is optimized for Vercel's serverless infrastructure with proper connection pooling for PostgreSQL.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🤝 Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Feedback on this feedback app? How meta! 😄
+
+Feel free to open issues or submit pull requests. All contributions are welcome!
+
+## 📝 License
+
+MIT License - feel free to use this project for learning or production.
+
+---
+
+**Built with ❤️ using Next.js** | [Live Demo](#) | [Report Bug](https://github.com/anuz505/Next-JS-feedback-project/issues)
