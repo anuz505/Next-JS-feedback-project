@@ -32,3 +32,9 @@ export interface FeedbackListProps {
   onUpvote: (id: number) => void;
   deletingId?: number;
 }
+
+export interface UpvoteButtonProps {
+  onUpvote: (id: number) => void;
+  feedbackID: number;
+  initial: boolean;
+}

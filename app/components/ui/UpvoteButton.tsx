@@ -1,11 +1,8 @@
 "use client";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { ArrowBigUp } from "lucide-react";
-interface UpvoteButtonProps {
-  onUpvote: (id: number) => void;
-  feedbackID: number;
-  initial: boolean;
-}
+import type { UpvoteButtonProps } from "@/app/lib/types";
 
 function UpvoteButton({ onUpvote, feedbackID, initial }: UpvoteButtonProps) {
   const [isUp, setIsUp] = useState(initial);

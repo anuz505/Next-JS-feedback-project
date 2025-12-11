@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import { Feedback, ReqBody } from "../lib/types";
-
+import { toast } from "react-toastify";
 interface FeedbackFormProps {
   isOpen: boolean;
   onClose: () => void;
@@ -58,6 +58,7 @@ export default function FeedbackForm({
   const handleSubmit = () => {
     setErrors({});
     onSubmit(formData);
+    toast.success("Feedback updated");
   };
 
   if (!isOpen) return null;

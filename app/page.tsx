@@ -11,6 +11,7 @@ import {
 import { Feedback, ReqBody } from "./lib/types";
 import FeedbackList from "./components/FeedbackList";
 import FeedbackForm from "./components/FeedbackForm";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Home() {
   const { data: feedbacks = [], isLoading, error } = useFeedbacks();
@@ -37,6 +38,7 @@ export default function Home() {
 
   const handleUpVote = async (id: number) => {
     await updateUpvoteMutation.mutateAsync(id);
+    toast.success("upvote updated!");
   };
 
   const handleEdit = (feedback: Feedback) => {
@@ -91,6 +93,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <ToastContainer />
         {/* Stats */}
         <div className="mb-8 flex items-center justify-between">
           <div>
