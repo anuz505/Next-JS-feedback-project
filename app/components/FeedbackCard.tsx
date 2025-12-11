@@ -71,7 +71,7 @@ const FeedbackCard = ({
           minute: "2-digit",
         })}
       </p>
-      <div className="mt-4 ">
+      <div className="mt-4 flex items-center gap-4">
         <select
           value={feedback.status || "open"}
           onChange={(e) => onStatusUpdate(feedback.id, e.target.value)}
