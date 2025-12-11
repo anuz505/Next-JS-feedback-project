@@ -17,7 +17,7 @@ function UpvoteButton({ onUpvote, feedbackID, initial }: UpvoteButtonProps) {
         onClick={() => handleUpVote()}
         className={`mt-4 p-2 rounded-xl bg-gray-300 ${
           isUp
-            ? "bg-red-500"
+            ? "bg-red-500 text-white"
             : "bg-gray-300 hover:bg-orange-400 transition-all duration-300 hover:text-white "
         }`}
       >
