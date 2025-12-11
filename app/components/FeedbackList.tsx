@@ -9,6 +9,7 @@ function FeedbackList({
   onDelete,
   deletingId,
   onUpvote,
+  onStatusUpdate,
 }: FeedbackListProps) {
   if (feedbacks.length === 0) {
     return (
@@ -36,6 +37,7 @@ function FeedbackList({
           onDelete={onDelete}
           isDeleting={deletingId === feedback.id}
           onUpvote={onUpvote}
+          onStatusUpdate={onStatusUpdate}
         />
       ))}
     </div>

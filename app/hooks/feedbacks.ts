@@ -81,3 +81,26 @@ export function useUpvoteFeedback() {
     },
   });
 }
+
+// status update
+export function useStatusFeedback() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async function ({
+      id,
+      status,
+    }: {
+      id: number;
+      status: string;
+    }) {
+      const response = await axios.patch<APIResponse<Feedback>>(
+        `/api/feedback/${id}/status`,
+        { status }
+      );
+      return response.data.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["feedbacks"] });
+    },
+  });
+}

@@ -5,6 +5,7 @@ import {
   useCreateFeedback,
   useDeleteFeedback,
   useFeedbacks,
+  useStatusFeedback,
   useUpdateFeedback,
   useUpvoteFeedback,
 } from "./hooks/feedbacks";
@@ -18,6 +19,7 @@ export default function Home() {
   const createMutation = useCreateFeedback();
   const deleteMutation = useDeleteFeedback();
   const updateMutation = useUpdateFeedback();
+  const onStatusMutation = useStatusFeedback();
   const updateUpvoteMutation = useUpvoteFeedback();
   const [editingFeedback, setEditingFeedback] = useState<Feedback | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -39,6 +41,10 @@ export default function Home() {
   const handleUpVote = async (id: number) => {
     await updateUpvoteMutation.mutateAsync(id);
     toast.success("upvote updated!");
+  };
+  const handleonStatusUpdate = async (id: number, status: string) => {
+    await onStatusMutation.mutateAsync({ id, status });
+    toast.success("Status updated!");
   };
 
   const handleEdit = (feedback: Feedback) => {
@@ -62,7 +68,6 @@ export default function Home() {
     setIsFormOpen(false);
     setEditingFeedback(null);
   };
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -127,6 +132,7 @@ export default function Home() {
               deleteMutation.isPending ? deleteMutation.variables : undefined
             }
             onUpvote={handleUpVote}
+            onStatusUpdate={handleonStatusUpdate}
           />
         )}
       </main>

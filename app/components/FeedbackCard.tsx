@@ -9,6 +9,7 @@ const FeedbackCard = ({
   onDelete,
   isDeleting,
   onUpvote,
+  onStatusUpdate,
 }: FeedbackCardProps) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 hover:border-black transition-all duration-200 group">
@@ -70,6 +71,17 @@ const FeedbackCard = ({
           minute: "2-digit",
         })}
       </p>
+      <div className="mt-4 ">
+        <select
+          value={feedback.status || "open"}
+          onChange={(e) => onStatusUpdate(feedback.id, e.target.value)}
+          className="px-3 py-2 text-sm text-gray-600 border border-gray-300 rounded-2xl "
+        >
+          <option value="open">Open</option>
+          <option value="progress">Progressz</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
       <UpvoteButton
         feedbackID={feedback.id}
         onUpvote={onUpvote}
