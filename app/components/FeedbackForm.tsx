@@ -65,7 +65,7 @@ export default function FeedbackForm({
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
+      className="fixed inset-0  bg-opacity-10 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
