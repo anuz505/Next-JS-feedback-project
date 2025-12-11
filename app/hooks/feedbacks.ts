@@ -65,3 +65,19 @@ export function useUpdateFeedback() {
     },
   });
 }
+
+// upvote
+export function useUpvoteFeedback() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async function (id: number) {
+      const response = await axios.patch<APIResponse<Feedback>>(
+        `/api/feedback/${id}/upvote`
+      );
+      return response.data.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["feedbacks"] });
+    },
+  });
+}

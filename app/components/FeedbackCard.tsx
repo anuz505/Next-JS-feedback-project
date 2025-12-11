@@ -1,12 +1,14 @@
 import React from "react";
-import { Star, Edit2, Trash2 } from "lucide-react";
+import { Star, Edit2, Trash2, ArrowBigUp } from "lucide-react";
 import { FeedbackCardProps } from "../lib/types";
+import UpvoteButton from "./ui/UpvoteButton";
 
 const FeedbackCard = ({
   feedback,
   onEdit,
   onDelete,
   isDeleting,
+  onUpvote,
 }: FeedbackCardProps) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 hover:border-black transition-all duration-200 group">
@@ -33,6 +35,7 @@ const FeedbackCard = ({
           >
             <Edit2 className="w-4 h-4 text-gray-600" />
           </button>
+
           <button
             onClick={() => onDelete(feedback.id)}
             className="p-2 hover:bg-gray-100 rounded-md transition-colors"
@@ -67,6 +70,11 @@ const FeedbackCard = ({
           minute: "2-digit",
         })}
       </p>
+      <UpvoteButton
+        feedbackID={feedback.id}
+        onUpvote={onUpvote}
+        initial={feedback.upvotes}
+      />
     </div>
   );
 };

@@ -6,6 +6,7 @@ import {
   useDeleteFeedback,
   useFeedbacks,
   useUpdateFeedback,
+  useUpvoteFeedback,
 } from "./hooks/feedbacks";
 import { Feedback, ReqBody } from "./lib/types";
 import FeedbackList from "./components/FeedbackList";
@@ -16,6 +17,7 @@ export default function Home() {
   const createMutation = useCreateFeedback();
   const deleteMutation = useDeleteFeedback();
   const updateMutation = useUpdateFeedback();
+  const updateUpvoteMutation = useUpvoteFeedback();
   const [editingFeedback, setEditingFeedback] = useState<Feedback | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -31,6 +33,10 @@ export default function Home() {
     } catch (error) {
       console.error("mutation error", error);
     }
+  };
+
+  const handleUpVote = async (id: number) => {
+    await updateUpvoteMutation.mutateAsync(id);
   };
 
   const handleEdit = (feedback: Feedback) => {
@@ -117,6 +123,7 @@ export default function Home() {
             deletingId={
               deleteMutation.isPending ? deleteMutation.variables : undefined
             }
+            onUpvote={handleUpVote}
           />
         )}
       </main>

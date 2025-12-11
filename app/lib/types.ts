@@ -3,6 +3,7 @@ export interface Feedback {
   title: string;
   description: string | null;
   rating: number;
+  upvotes: boolean;
   created_at: Date;
   updated_at: Date;
 }
@@ -21,11 +22,13 @@ export interface FeedbackCardProps {
   feedback: Feedback;
   onEdit: (feedback: Feedback) => void;
   onDelete: (id: number) => void;
+  onUpvote: (id: number) => void;
   isDeleting?: boolean;
 }
 export interface FeedbackListProps {
   feedbacks: Feedback[];
   onEdit: (feedback: Feedback) => void;
   onDelete: (id: number) => void;
+  onUpvote: (id: number) => void;
   deletingId?: number;
 }
