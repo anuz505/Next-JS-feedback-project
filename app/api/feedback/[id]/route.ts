@@ -53,6 +53,24 @@ export async function PUT(
     }
     const body: ReqBody = await request.json();
     const { title, description, rating } = body;
+    if (title.length > 100) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Title must not exceed 100 characters",
+        },
+        { status: 400 }
+      );
+    }
+    if (description && description.length > 500) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Description Length exceeded",
+        },
+        { status: 400 }
+      );
+    }
     const feedback = await prisma.feedback.update({
       where: { id: id },
       data: { title, description, rating },

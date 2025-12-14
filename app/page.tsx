@@ -12,6 +12,7 @@ import {
 import { Feedback, ReqBody } from "./lib/types";
 import FeedbackList from "./components/FeedbackList";
 import FeedbackForm from "./components/FeedbackForm";
+import FeedbackModal from "./components/FeedBackModal";
 import { toast, ToastContainer } from "react-toastify";
 
 export default function Home() {
@@ -31,6 +32,10 @@ export default function Home() {
   const updateUpvoteMutation = useUpvoteFeedback();
   const [editingFeedback, setEditingFeedback] = useState<Feedback | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedFeedback, setSelectedFeedback] = useState<Feedback | null>(
+    null
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -82,6 +87,16 @@ export default function Home() {
   const handleCloseForm = () => {
     setIsFormOpen(false);
     setEditingFeedback(null);
+  };
+
+  const handleCardClick = (feedback: Feedback) => {
+    setSelectedFeedback(feedback);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedFeedback(null);
   };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key == "Enter") {
@@ -174,6 +189,7 @@ export default function Home() {
             }
             onUpvote={handleUpVote}
             onStatusUpdate={handleonStatusUpdate}
+            onCardClick={handleCardClick}
           />
         )}
       </main>
@@ -186,6 +202,13 @@ export default function Home() {
         editingFeedback={editingFeedback}
         isSubmitting={createMutation.isPending || updateMutation.isPending}
         error={createMutation.error || updateMutation.error}
+      />
+
+      {/* Feedback Detail Modal */}
+      <FeedbackModal
+        feedback={selectedFeedback}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
       />
 
       {/* Footer */}

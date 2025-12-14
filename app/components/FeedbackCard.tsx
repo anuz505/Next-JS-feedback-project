@@ -10,9 +10,13 @@ const FeedbackCard = ({
   isDeleting,
   onUpvote,
   onStatusUpdate,
+  onCardClick,
 }: FeedbackCardProps) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6 hover:border-black transition-all duration-200 group">
+    <div
+      className="bg-white border border-gray-200 rounded-lg p-6 hover:border-black transition-all duration-200 group cursor-pointer"
+      onClick={() => onCardClick?.(feedback)}
+    >
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-1">
           {[...Array(5)].map((_, i) => (
@@ -29,7 +33,10 @@ const FeedbackCard = ({
         </div>
         <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
-            onClick={() => onEdit(feedback)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(feedback);
+            }}
             className="p-2 hover:bg-gray-100 rounded-md transition-colors"
             disabled={isDeleting}
             aria-label="Edit feedback"
@@ -38,7 +45,10 @@ const FeedbackCard = ({
           </button>
 
           <button
-            onClick={() => onDelete(feedback.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(feedback.id);
+            }}
             className="p-2 hover:bg-gray-100 rounded-md transition-colors"
             disabled={isDeleting}
             aria-label="Delete feedback"
@@ -57,9 +67,16 @@ const FeedbackCard = ({
       </h3>
 
       {feedback.description && (
-        <p className="text-gray-700 mb-4 leading-relaxed">
-          {feedback.description}
-        </p>
+        <div>
+          <p className="text-gray-700 mb-4 leading-relaxed line-clamp-3">
+            {feedback.description}
+          </p>
+          {feedback.description?.length > 150 && (
+            <span className="text-sm text-blue-600 hover:text-blue-700 cursor-pointer">
+              Read more...
+            </span>
+          )}
+        </div>
       )}
 
       <p className="text-xs text-gray-500">
@@ -74,7 +91,11 @@ const FeedbackCard = ({
       <div className="mt-4 flex items-center gap-4">
         <select
           value={feedback.status || "open"}
-          onChange={(e) => onStatusUpdate(feedback.id, e.target.value)}
+          onChange={(e) => {
+            e.stopPropagation();
+            onStatusUpdate(feedback.id, e.target.value);
+          }}
+          onClick={(e) => e.stopPropagation()}
           className="px-3 py-2 text-sm text-gray-600 border border-gray-300 rounded-2xl "
         >
           <option value="open">Open</option>

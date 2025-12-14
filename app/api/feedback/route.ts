@@ -21,9 +21,6 @@ export async function GET(request: NextRequest) {
       prisma.feedback.count({ where }),
     ]);
 
-    // const res: Feedback[] = await prisma.feedback.findMany({
-    //   orderBy: { created_at: "desc" },
-    // });
     return NextResponse.json(
       { success: true, data: feedbackList },
       { status: 200 }
@@ -50,10 +47,28 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
+    if (title.length > 100) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Title must not exceed 100 characters",
+        },
+        { status: 400 }
+      );
+    }
     if (!rating || rating < 1 || rating > 5) {
       return NextResponse.json(
         { success: false, error: "Rating must be between 1 and 5" },
+        { status: 400 }
+      );
+    }
+
+    if (description && description.length > 500) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Description Length exceeded",
+        },
         { status: 400 }
       );
     }

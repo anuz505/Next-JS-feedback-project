@@ -57,8 +57,29 @@ export default function FeedbackForm({
 
   const handleSubmit = () => {
     setErrors({});
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.title.trim()) {
+      newErrors.title = "Title is required";
+    } else if (formData.title.length > 100) {
+      newErrors.title = "Title must not exceed 100 characters";
+    }
+
+    if (formData.description && formData.description.length > 500) {
+      newErrors.description = "Description must not exceed 500 characters";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     onSubmit(formData);
-    toast.success("Feedback updated");
+    if (!editingFeedback) {
+      toast.success("Feedback submitted successfully");
+    } else {
+      toast.success("Feedback updated successfully");
+    }
   };
 
   if (!isOpen) return null;
@@ -174,7 +195,9 @@ export default function FeedbackForm({
           {error && !error.details && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-3">
               <p className="text-red-600 text-sm">
-                {error.error || "An error occurred"}
+                {typeof error === "string"
+                  ? error
+                  : error.error || error.message || "An error occurred"}
               </p>
             </div>
           )}

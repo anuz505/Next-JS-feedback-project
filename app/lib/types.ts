@@ -26,6 +26,7 @@ export interface FeedbackCardProps {
   onUpvote: (id: number) => void;
   isDeleting?: boolean;
   onStatusUpdate: (id: number, status: string) => void;
+  onCardClick: (feedback: Feedback) => void;
 }
 export interface FeedbackListProps {
   feedbacks: Feedback[];
@@ -34,10 +35,16 @@ export interface FeedbackListProps {
   onUpvote: (id: number) => void;
   onStatusUpdate: (id: number, status: string) => void;
   deletingId?: number;
+  onCardClick: (feedback: Feedback) => void;
 }
 
 export interface UpvoteButtonProps {
   onUpvote: (id: number) => void;
   feedbackID: number;
   initial: boolean;
+}
+export interface FeedbackModalProps {
+  feedback: Feedback | null;
+  isOpen: boolean;
+  onClose: () => void;
 }
