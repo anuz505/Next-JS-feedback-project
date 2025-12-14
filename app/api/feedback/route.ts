@@ -1,12 +1,33 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 import type { Feedback, ReqBody } from "@/app/lib/types";
-export async function GET() {
+import { Prisma } from "@/app/generated/prisma/client";
+export async function GET(request: NextRequest) {
   try {
-    const res: Feedback[] = await prisma.feedback.findMany({
-      orderBy: { created_at: "desc" },
-    });
-    return NextResponse.json({ success: true, data: res }, { status: 200 });
+    const searchParams = request.nextUrl.searchParams;
+    const search = searchParams.get("search") || "";
+
+    const where: Prisma.FeedbackWhereInput = {};
+    if (search) {
+      where.OR = [
+        { title: { contains: search, mode: "insensitive" } },
+        { description: { contains: search, mode: "insensitive" } },
+      ];
+    }
+    const [feedbackList, total] = await Promise.all([
+      prisma.feedback.findMany({
+        where,
+      }),
+      prisma.feedback.count({ where }),
+    ]);
+
+    // const res: Feedback[] = await prisma.feedback.findMany({
+    //   orderBy: { created_at: "desc" },
+    // });
+    return NextResponse.json(
+      { success: true, data: feedbackList },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
       { success: false, error: "Failed to fetch feedbacks" },

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageSquare, Plus, Loader2 } from "lucide-react";
 import {
   useCreateFeedback,
@@ -15,7 +15,15 @@ import FeedbackForm from "./components/FeedbackForm";
 import { toast, ToastContainer } from "react-toastify";
 
 export default function Home() {
-  const { data: feedbacks = [], isLoading, error } = useFeedbacks();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const {
+    data: feedbacks = [],
+    isLoading,
+    error,
+  } = useFeedbacks({
+    search: debouncedSearch,
+  });
   const createMutation = useCreateFeedback();
   const deleteMutation = useDeleteFeedback();
   const updateMutation = useUpdateFeedback();
@@ -23,6 +31,13 @@ export default function Home() {
   const updateUpvoteMutation = useUpvoteFeedback();
   const [editingFeedback, setEditingFeedback] = useState<Feedback | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const handleSubmit = async (data: ReqBody) => {
     try {
@@ -68,11 +83,22 @@ export default function Home() {
     setIsFormOpen(false);
     setEditingFeedback(null);
   };
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key == "Enter") {
+      setDebouncedSearch(searchQuery);
+      e.currentTarget.blur();
+    }
+  };
+
+  const handleDebouncedSearch = () => {
+    setDebouncedSearch(searchQuery);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-black rounded-lg flex items-center justify-center">
@@ -92,6 +118,21 @@ export default function Home() {
               <Plus className="w-5 h-5" />
               Add Feedback
             </button>
+          </div>
+          <div className="bg-white w-full h-20 m-5 rounded-2xl flex justify-between flex-col ">
+            <p className=" mt-2 mx-2 font-bold flex justify-between">
+              Search
+              <span className="ml-2 text-xs font-normal text-gray-600">
+                Note: Here, Debouncing technique was used
+              </span>
+            </p>
+            <input
+              type="text"
+              className="w-full pl-2 border border-gray-300 hover:scale-102 hover:border-black transition-all h-10 focus:border-b-2 rounded-2xl"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyPress}
+            />
           </div>
         </div>
       </header>

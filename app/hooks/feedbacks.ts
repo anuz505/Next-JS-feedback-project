@@ -3,13 +3,20 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Feedback } from "../lib/types";
 import type { APIResponse, ReqBody } from "../lib/types";
 
+interface FeedbackFilters {
+  search?: string;
+}
+
 // fetches all the feedbacks
-export function useFeedbacks() {
+export function useFeedbacks(filters: FeedbackFilters) {
   return useQuery<Feedback[]>({
-    queryKey: ["feedbacks"],
+    queryKey: ["feedbacks", filters],
     queryFn: async () => {
+      const params = new URLSearchParams({
+        search: filters.search || "",
+      });
       const response = await axios.get<APIResponse<Feedback[]>>(
-        "/api/feedback"
+        `/api/feedback?${params}`
       );
       return response.data.data || [];
     },
