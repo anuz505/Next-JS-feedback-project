@@ -14,7 +14,10 @@ function UpvoteButton({ onUpvote, feedbackID, initial }: UpvoteButtonProps) {
   return (
     <div>
       <button
-        onClick={() => handleUpVote()}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleUpVote();
+        }}
         className={`mt-4 p-2 rounded-xl bg-gray-300 ${
           isUp
             ? "bg-red-500 text-white"
