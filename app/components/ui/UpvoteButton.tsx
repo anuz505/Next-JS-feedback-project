@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import { ArrowBigUp } from "lucide-react";
 import type { UpvoteButtonProps } from "@/app/lib/types";
 
