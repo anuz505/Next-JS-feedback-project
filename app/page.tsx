@@ -105,9 +105,9 @@ export default function Home() {
     }
   };
 
-  const handleDebouncedSearch = () => {
-    setDebouncedSearch(searchQuery);
-  };
+  // const handleDebouncedSearch = () => {
+  //   setDebouncedSearch(searchQuery);
+  // };
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -48,3 +48,6 @@ export interface FeedbackModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+export interface FeedbackFilters {
+  search?: string;
+}

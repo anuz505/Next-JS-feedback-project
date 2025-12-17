@@ -1,22 +1,21 @@
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Feedback } from "../lib/types";
-import type { APIResponse, ReqBody } from "../lib/types";
-
-interface FeedbackFilters {
-  search?: string;
-}
+import type { FeedbackFilters, APIResponse, ReqBody } from "../lib/types";
 
 // fetches all the feedbacks
 export function useFeedbacks(filters: FeedbackFilters) {
   return useQuery<Feedback[]>({
     queryKey: ["feedbacks", filters],
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       const params = new URLSearchParams({
         search: filters.search || "",
       });
       const response = await axios.get<APIResponse<Feedback[]>>(
-        `/api/feedback?${params}`
+        `/api/feedback?${params}`,
+        {
+          signal: signal,
+        }
       );
       return response.data.data || [];
     },
